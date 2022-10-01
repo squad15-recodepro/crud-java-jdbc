@@ -7,7 +7,7 @@ public class Sindicato implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Integer cnpj_sind;
+	private Double cnpj_sind;
 	private String nome_sind;
 	private String end_sind;
 	private String uf_sind;
@@ -16,7 +16,7 @@ public class Sindicato implements Serializable {
 	public Sindicato() {
 	}
 
-	public Sindicato(Integer cnpj_sind, String nome_sind, String end_sind, String uf_sind, String cidade_sind) {
+	public Sindicato(Double cnpj_sind, String nome_sind, String end_sind, String uf_sind, String cidade_sind) {
 		this.cnpj_sind = cnpj_sind;
 		this.nome_sind = nome_sind;
 		this.end_sind = end_sind;
@@ -24,11 +24,11 @@ public class Sindicato implements Serializable {
 		this.cidade_sind = cidade_sind;
 	}
 
-	public Integer getCnpj_sind() {
+	public Double getCnpj_sind() {
 		return cnpj_sind;
 	}
 
-	public void setCnpj_sind(Integer cnpj_sind) {
+	public void setCnpj_sind(Double cnpj_sind) {
 		this.cnpj_sind = cnpj_sind;
 	}
 
