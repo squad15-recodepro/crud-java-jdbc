@@ -48,12 +48,7 @@ public class SindicatoDaoJDBC implements SindicatoDao{
 			st.setDouble(1, cnpj);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Sindicato obj = new Sindicato();
-				obj.setCnpj_sind(rs.getDouble("cnpj_sind"));
-				obj.setNome_sind(rs.getString("nome_sind"));
-				obj.setEnd_sind(rs.getString("end_sind"));
-				obj.setUf_sind(rs.getString("uf_sind"));
-				obj.setCidade_sind(rs.getString("cidade_sind"));
+				Sindicato obj = instantiateSindicato(rs);
 				return obj;
 			}
 			return null;
@@ -68,6 +63,15 @@ public class SindicatoDaoJDBC implements SindicatoDao{
 		
 	}
 
+	private Sindicato instantiateSindicato(ResultSet rs) throws SQLException {
+		Sindicato obj = new Sindicato();
+		obj.setCnpj_sind(rs.getDouble("cnpj_sind"));
+		obj.setNome_sind(rs.getString("nome_sind"));
+		obj.setEnd_sind(rs.getString("end_sind"));
+		obj.setUf_sind(rs.getString("uf_sind"));
+		obj.setCidade_sind(rs.getString("cidade_sind"));
+		return obj;
+	}
 	@Override
 	public List<Sindicato> findAll() {
 		// TODO Auto-generated method stub

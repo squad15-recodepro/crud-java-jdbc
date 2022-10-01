@@ -49,17 +49,8 @@ public class AlunosDaoJDBC implements AlunosDao{
 			st.setDouble(1, cpf);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Sindicato sind = new Sindicato();
-				sind.setCnpj_sind(rs.getDouble("cnpj_sind"));
-				sind.setNome_sind(rs.getString("nome_sind"));
-				sind.setEnd_sind(rs.getString("end_sind"));
-				sind.setUf_sind(rs.getString("uf_sind"));
-				sind.setCidade_sind(rs.getString("cidade_sind"));
-				Alunos alun = new Alunos();
-				alun.setCpf_alun(rs.getDouble("cpf_alun"));
-				alun.setNome_alun(rs.getString("nome_alun"));
-				alun.setData_nasc_alun(rs.getDate("data_nasc_alun"));
-				alun.setSindicato(sind);
+				Sindicato sind = instantiateSindicato(rs);
+				Alunos alun = instantiateAlunos(rs, sind);
 				return alun;
 			}
 			return null;
@@ -73,6 +64,23 @@ public class AlunosDaoJDBC implements AlunosDao{
 		}
 	}
 
+	private Alunos instantiateAlunos(ResultSet rs, Sindicato sind) throws SQLException {
+		Alunos alun = new Alunos();
+		alun.setCpf_alun(rs.getDouble("cpf_alun"));
+		alun.setNome_alun(rs.getString("nome_alun"));
+		alun.setData_nasc_alun(rs.getDate("data_nasc_alun"));
+		alun.setSindicato(sind);
+		return alun;
+	}
+	private Sindicato instantiateSindicato(ResultSet rs) throws SQLException {
+		Sindicato sind = new Sindicato();
+		sind.setCnpj_sind(rs.getDouble("cnpj_sind"));
+		sind.setNome_sind(rs.getString("nome_sind"));
+		sind.setEnd_sind(rs.getString("end_sind"));
+		sind.setUf_sind(rs.getString("uf_sind"));
+		sind.setCidade_sind(rs.getString("cidade_sind"));
+		return sind;
+	}
 	@Override
 	public List<Alunos> findAll() {
 		// TODO Auto-generated method stub

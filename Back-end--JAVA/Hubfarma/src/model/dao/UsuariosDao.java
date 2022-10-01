@@ -8,7 +8,7 @@ public interface UsuariosDao {
 
 	void insert(Usuarios obj);
 	void update(Usuarios obj);
-	void deleteByCNPJ(Double cnpj);
-	Usuarios findByCNPJ(Double cnpj);
+	void deleteByCPF(Double cpf);
+	Usuarios findByCPF(Double cpf);
 	List<Usuarios> findAll();
 }
