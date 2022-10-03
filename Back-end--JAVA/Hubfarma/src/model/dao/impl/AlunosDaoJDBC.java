@@ -45,13 +45,43 @@ public class AlunosDaoJDBC implements AlunosDao{
 
 	@Override
 	public void update(Alunos obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+										"UPDATE alunos "
+										+ "SET nome_alun = ?, data_nasc_alun = ? "
+										+ "WHERE cpf_alun = ? ");
+										
+			st.setString(1, obj.getNome_alun());
+			st.setDate(2, new java.sql.Date(obj.getData_nasc_alun().getTime()));
+			st.setDouble(3, obj.getCpf_alun());
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
 	@Override
 	public void deleteByCPF(Double cpf) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM alunos WHERE cpf_alun = ? ");
+			
+			st.setDouble(1, cpf);
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -88,6 +118,7 @@ public class AlunosDaoJDBC implements AlunosDao{
 		alun.setData_nasc_alun(rs.getDate("data_nasc_alun"));
 		return alun;
 	}
+	
 	@Override
 	public List<Alunos> findAll() {
 		PreparedStatement st = null;

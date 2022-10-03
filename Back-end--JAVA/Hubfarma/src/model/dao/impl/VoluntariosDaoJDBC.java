@@ -50,13 +50,42 @@ public class VoluntariosDaoJDBC implements VoluntarioDao{
 
 	@Override
 	public void update(Voluntarios obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try{
+			st = conn.prepareStatement(
+										"UPDATE voluntarios "
+										+ "SET periodo = ? "
+										+ "WHERE id_voluntario = ? ");
+			
+			
+			st.setString(1, obj.getPeriodo());
+			st.setInt(2, obj.getId_voluntario());
+			st.executeUpdate();
+			
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM voluntarios WHERE id_voluntario = ? ");
+			st.setInt(1, id);
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 

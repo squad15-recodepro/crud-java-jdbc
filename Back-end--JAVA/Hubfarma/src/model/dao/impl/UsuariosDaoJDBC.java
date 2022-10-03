@@ -51,13 +51,50 @@ public class UsuariosDaoJDBC implements UsuariosDao {
 
 	@Override
 	public void update(Usuarios obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st= conn.prepareStatement(
+										"UPDATE usuarios "
+										+ "SET nome_user = ?, endereco_user = ?, email_user = ?, uf_user = ?, cidade_user = ?, formacao_user = ?, data_nasc_user = ? "
+										+ "WHERE cpf_user = ? ");
+			
+			
+			
+			st.setString(1, obj.getNome_user());
+			st.setString(2, obj.getEnd_user());
+			st.setString(3, obj.getEmail_user());
+			st.setString(4, obj.getUf_user());
+			st.setString(5, obj.getCidade_user());
+			st.setString(6, obj.getFormacao_user());
+			st.setDate(7, new java.sql.Date(obj.getData_nasc_user().getTime()));
+			st.setDouble(8, obj.getCpf_user());
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
 	@Override
 	public void deleteByCPF(Double cpf) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("DELETE FROM usuarios WHERE cpf_user = ? ");
+			
+			st.setDouble(1, cpf);
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 

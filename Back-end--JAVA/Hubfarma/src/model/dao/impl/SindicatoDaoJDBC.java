@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import db.DB;
 import db.DbException;
@@ -20,6 +21,7 @@ public class SindicatoDaoJDBC implements SindicatoDao{
 	public SindicatoDaoJDBC(Connection conn) {
 		this.conn = conn;
 	}
+	
 	@Override
 	public void insert(Sindicato obj) {
 		PreparedStatement st = null;
@@ -49,14 +51,49 @@ public class SindicatoDaoJDBC implements SindicatoDao{
 
 	@Override
 	public void update(Sindicato obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+										"UPDATE sindicatos "
+										+ "SET nome_sind = ?, endereco_sind = ?, uf_sind = ?, cidade_sind = ? "
+										+ "WHERE cnpj_sind = ?");
+										
+			st.setString(1, obj.getNome_sind());
+			st.setString(2, obj.getEnd_sind());
+			st.setString(3, obj.getUf_sind());
+			st.setString(4, obj.getCidade_sind());
+			st.setDouble(5, obj.getCnpj_sind());
+			
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
 	@Override
 	public void deleteByCNPJ(Double cnpj) {
-		// TODO Auto-generated method stub
-		
+		Locale.setDefault(Locale.US);
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+										"DELETE FROM sindicatos "
+										+ "WHERE cnpj_sind = ? "
+										);
+			st.setDouble(1, cnpj);
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
@@ -90,11 +127,12 @@ public class SindicatoDaoJDBC implements SindicatoDao{
 		Sindicato obj = new Sindicato();
 		obj.setCnpj_sind(rs.getDouble("cnpj_sind"));
 		obj.setNome_sind(rs.getString("nome_sind"));
-		obj.setEnd_sind(rs.getString("end_sind"));
+		obj.setEnd_sind(rs.getString("endereco_sind"));
 		obj.setUf_sind(rs.getString("uf_sind"));
 		obj.setCidade_sind(rs.getString("cidade_sind"));
 		return obj;
 	}
+	
 	@Override
 	public List<Sindicato> findAll() {
 		PreparedStatement st = null;
