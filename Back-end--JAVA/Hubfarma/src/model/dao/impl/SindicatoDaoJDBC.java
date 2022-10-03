@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -20,7 +22,28 @@ public class SindicatoDaoJDBC implements SindicatoDao{
 	}
 	@Override
 	public void insert(Sindicato obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+										"INSERT INTO sindicatos "
+										+ "(cnpj_sind, nome_sind, endereco_sind, uf_sind, cidade_sind) "
+										+ "VALUES "
+										+ "(?,?,?,?,?) ");
+										
+			st.setDouble(1, obj.getCnpj_sind());
+			st.setString(2, obj.getNome_sind());
+			st.setString(3, obj.getEnd_sind());
+			st.setString(4, obj.getUf_sind());
+			st.setString(5, obj.getCidade_sind());
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -74,8 +97,22 @@ public class SindicatoDaoJDBC implements SindicatoDao{
 	}
 	@Override
 	public List<Sindicato> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM sindicatos ORDER BY nome_sind");
+			rs = st.executeQuery();
+			
+			List<Sindicato> lista = new ArrayList<>();
+			return lista;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	

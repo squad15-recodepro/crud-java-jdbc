@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -21,7 +22,30 @@ public class UsuariosDaoJDBC implements UsuariosDao {
 
 	@Override
 	public void insert(Usuarios obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st= conn.prepareStatement(
+										"INSERT INTO usuarios "
+										+ "(cpf_user, nome_user, endereco_user, email_user, uf_user, cidade_user, formacao_user, data_nasc_user) "
+										+ "VALUES "
+										+ "(?,?,?,?,?,?,?,?) ");
+			st.setDouble(1, obj.getCpf_user());
+			st.setString(2, obj.getNome_user());
+			st.setString(3, obj.getEnd_user());
+			st.setString(4, obj.getEmail_user());
+			st.setString(5, obj.getUf_user());
+			st.setString(6, obj.getCidade_user());
+			st.setString(7, obj.getFormacao_user());
+			st.setDate(8, new java.sql.Date(obj.getData_nasc_user().getTime()));
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -76,8 +100,22 @@ public class UsuariosDaoJDBC implements UsuariosDao {
 
 	@Override
 	public List<Usuarios> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM usuarios ORDER BY nome_user ");
+			rs = st.executeQuery();
+			
+			List<Usuarios> lista = new ArrayList<>();
+			return lista;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 	
 

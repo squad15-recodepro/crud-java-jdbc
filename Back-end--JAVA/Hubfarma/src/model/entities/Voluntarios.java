@@ -42,7 +42,7 @@ public class Voluntarios implements Serializable {
 	}
 
 	public Usuarios getUsuarios() {
-		return usuarios;
+		return usuarios ;
 	}
 
 	public void setUsuarios(Usuarios usuarios) {

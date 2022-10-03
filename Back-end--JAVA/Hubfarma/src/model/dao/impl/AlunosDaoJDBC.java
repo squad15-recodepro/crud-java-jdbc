@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import db.DB;
@@ -21,8 +22,25 @@ public class AlunosDaoJDBC implements AlunosDao{
 	}
 	@Override
 	public void insert(Alunos obj) {
-		// TODO Auto-generated method stub
-		
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+										"INSERT INTO alunos "
+										+ "(cpf_alun, nome_alun, data_nasc_alun) "
+										+ "VALUES "
+										+ "(?,?,?) ");
+			st.setDouble(1, obj.getCpf_alun());
+			st.setString(2, obj.getNome_alun());
+			st.setDate(3, new java.sql.Date(obj.getData_nasc_alun().getTime()));
+			
+			st.executeUpdate();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
@@ -49,8 +67,7 @@ public class AlunosDaoJDBC implements AlunosDao{
 			st.setDouble(1, cpf);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Sindicato sind = instantiateSindicato(rs);
-				Alunos alun = instantiateAlunos(rs, sind);
+				Alunos alun = instantiateAlunos(rs);
 				return alun;
 			}
 			return null;
@@ -64,27 +81,35 @@ public class AlunosDaoJDBC implements AlunosDao{
 		}
 	}
 
-	private Alunos instantiateAlunos(ResultSet rs, Sindicato sind) throws SQLException {
+	private Alunos instantiateAlunos(ResultSet rs) throws SQLException {
 		Alunos alun = new Alunos();
 		alun.setCpf_alun(rs.getDouble("cpf_alun"));
 		alun.setNome_alun(rs.getString("nome_alun"));
 		alun.setData_nasc_alun(rs.getDate("data_nasc_alun"));
-		alun.setSindicato(sind);
 		return alun;
-	}
-	private Sindicato instantiateSindicato(ResultSet rs) throws SQLException {
-		Sindicato sind = new Sindicato();
-		sind.setCnpj_sind(rs.getDouble("cnpj_sind"));
-		sind.setNome_sind(rs.getString("nome_sind"));
-		sind.setEnd_sind(rs.getString("end_sind"));
-		sind.setUf_sind(rs.getString("uf_sind"));
-		sind.setCidade_sind(rs.getString("cidade_sind"));
-		return sind;
 	}
 	@Override
 	public List<Alunos> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+									"SELECT alunos.*,sindicatos.nome_sind as AlunosAll "
+									+ "FROM alunos INNER JOIN sindicatos "
+									+ "ON alunos.cnpj_sind_fk = sindicatos.cnpj_sind "
+									+ "ORDER BY nome_alun ");
+			rs = st.executeQuery();
+			
+			List<Alunos> lista = new ArrayList<>();
+			return lista;
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 	
 }

@@ -12,16 +12,16 @@ public class Alunos implements Serializable{
 	private String nome_alun;
 	private Date data_nasc_alun;
 	
-	private Sindicato sindicato;
+	
 	
 	public Alunos() {
 	}
 
-	public Alunos(Double cpf_alun, String nome_alun, Date data_nasc_alun, Sindicato sindicato) {
+	public Alunos(Double cpf_alun, String nome_alun, Date data_nasc_alun) {
 		this.cpf_alun = cpf_alun;
 		this.nome_alun = nome_alun;
 		this.data_nasc_alun = data_nasc_alun;
-		this.sindicato = sindicato;
+		
 	}
 
 	public Double getCpf_alun() {
@@ -48,14 +48,6 @@ public class Alunos implements Serializable{
 		this.data_nasc_alun = data_nasc_alun;
 	}
 
-	public Sindicato getSindicato() {
-		return sindicato;
-	}
-
-	public void setSindicato(Sindicato sindicato) {
-		this.sindicato = sindicato;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(cpf_alun);
@@ -75,8 +67,7 @@ public class Alunos implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Alunos \ncpf_alun = " + cpf_alun + "\nnome_alun = " + nome_alun + "\ndata_nasc_alun = " + data_nasc_alun
-				+ "\nsindicato = " + sindicato;
+		return "Alunos \ncpf_alun = " + cpf_alun + "\nnome_alun = " + nome_alun + "\ndata_nasc_alun = " + data_nasc_alun;
 	}
 	
 	
