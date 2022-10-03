@@ -2,6 +2,9 @@ package model.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.Scanner;
+
+import model.dao.VoluntarioDao;
 
 public class Voluntarios implements Serializable {
 
@@ -12,17 +15,16 @@ public class Voluntarios implements Serializable {
 	
 	
 	private Usuarios usuarios;
-	private Sindicato sindicato;
 	
 	public Voluntarios() {
 	}
 
-	public Voluntarios(Integer id_voluntario, String periodo, Usuarios usuarios, Sindicato sindicato) {
+	public Voluntarios(Integer id_voluntario, String periodo, Usuarios usuarios) {
 		
 		this.id_voluntario = id_voluntario;
 		this.periodo = periodo;
 		this.usuarios = usuarios;
-		this.sindicato = sindicato;
+		
 	}
 
 	public Integer getId_voluntario() {
@@ -49,14 +51,6 @@ public class Voluntarios implements Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public Sindicato getSindicato() {
-		return sindicato;
-	}
-
-	public void setSindicato(Sindicato sindicato) {
-		this.sindicato = sindicato;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id_voluntario);
@@ -76,13 +70,54 @@ public class Voluntarios implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Voluntarios \nid_voluntario = " + id_voluntario + "\nperiodo = " + periodo + "\nusuarios = " + usuarios
-				+ "\nsindicato = " + sindicato;
+		return "Voluntarios \nid_voluntario = " + id_voluntario + "\nperiodo = " + periodo + "\nusuarios = " + usuarios;
 	}
 	
 	
+	public static void cadatrarVoluntario(Voluntarios voluntario, VoluntarioDao voluntarioDao) {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("CADASTRAR VOLUNTARIO");
+		System.out.println("DIGITE O ID: ");
+		int id = sc.nextInt();
+		System.out.println("DIGITE O PERIODO: ");
+		String periodo = sc.next();
+		
+		Usuarios user = new Usuarios();
+		double cpf = sc.nextDouble();
+		user.setCpf_user(cpf);
 	
+		
+		voluntario = new Voluntarios(id, periodo, user);
+		voluntarioDao.insert(voluntario);
+		System.out.println("VOLUNTARIO ADICIONADO COM SUCESSO!");
+	}
 	
+	public static void atualizarVoluntario(Voluntarios voluntario, VoluntarioDao voluntarioDao) {
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("ATUALIZAR VOLUNTARIO");
+		System.out.println("DIGITE O CPF DO VOLUNTARIO");
+		int id = sc.nextInt();
+		voluntario = voluntarioDao.findById(id);
+		System.out.println("DIGITE OS NOVOS DADOS DO USUARIO");
+		System.out.println("DIGITE O PERIODO: ");
+		String periodo = sc.next();
+		voluntario.setPeriodo(periodo);
+		
+		voluntarioDao.update(voluntario);
+		System.out.println("ATUALIZAÇÃO REALIZADA COM SUCESSO!");
+	}
 	
+	public static void pesquisarPorId(Voluntarios voluntario, VoluntarioDao voluntarioDao, int id) {
+		voluntario = voluntarioDao.findById(id);
+		System.out.println(voluntario);
+	}
+	
+	public static void deletarPorId(Voluntarios voluntario, VoluntarioDao voluntarioDao, int id) {
+		voluntario = new Voluntarios();
+		voluntarioDao.deleteById(id);
+		System.out.println("DELETADO COM SUCESSO!");
+	}
 	
 }

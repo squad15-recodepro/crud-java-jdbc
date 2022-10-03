@@ -10,5 +10,4 @@ public interface AlunosDao {
 	void update(Alunos obj);
 	void deleteByCPF(Double cpf);
 	Alunos findByCPF(Double cpf);
-	List<Alunos> findAll();
 }

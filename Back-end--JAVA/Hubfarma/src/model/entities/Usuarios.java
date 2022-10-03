@@ -1,8 +1,13 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Scanner;
+
+import model.dao.UsuariosDao;
 
 public class Usuarios implements Serializable {
 
@@ -129,6 +134,80 @@ public class Usuarios implements Serializable {
 	}
 
 
+	public static void cadastrarUsuarios(Usuarios usuario, UsuariosDao usuarioDao) throws ParseException {
+		Scanner sc = new Scanner(System.in);
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		
+		System.out.println("CADASTRAR NOVO USUARIO");
+		System.out.print("CPF: ");
+		double cpf = sc.nextDouble();
+		System.out.print("NOME: ");
+		String nome = sc.next();
+		System.out.println("ENDEREÇO: ");
+		sc.next();
+		String end = sc.nextLine();
+		System.out.println("EMAIL: ");
+		String email = sc.next();
+		
+		System.out.println("UF: ");
+		String uf = sc.next();
+		System.out.println("CIDADE: ");
+		String cidade = sc.next();
+		System.out.println("FORMAÇÃO: ");
+		String formacao = sc.next();
+		System.out.println("DATA DE NASC: ");
+		Date data = sdf.parse(sc.next());
+		
+		Usuarios user = new Usuarios(cpf, nome, end, email, uf, cidade, formacao, data);
+		usuarioDao.insert(user);
+		System.out.println("USUARIO CADASTRADO!");
+		
+	}
 	
+	public static void atualizarUsuario(Usuarios usuario, UsuariosDao usuarioDao) throws ParseException {
+		Scanner sc = new Scanner(System.in);
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		
+		System.out.println("ATUALIZAR USUARIO");
+		System.out.print("DIGITE O CPF DO USUARIO: ");
+		Double cpf = sc.nextDouble();
+		usuario = usuarioDao.findByCPF(cpf);
+		System.out.println("DIGITE OS NOVOS DADOS DO USUARIO");
+		System.out.print("NOME: ");
+		sc.next();
+		String nome = sc.next();
+		usuario.setNome_user(nome);
+		System.out.println("ENDEREÇO: ");
+		String end = sc.nextLine();
+		usuario.setEnd_user(end);
+		System.out.println("EMAIL: ");
+		String email = sc.next();
+		usuario.setEmail_user(email);
+		System.out.println("UF: ");
+		String uf = sc.next();
+		usuario.setUf_user(uf);
+		System.out.println("CIDADE: ");
+		String cidade = sc.next();
+		usuario.setCidade_user(cidade);
+		System.out.println("FORMAÇÃO: ");
+		String formacao = sc.next();
+		System.out.println("DATA DE NASC: ");
+		Date data = sdf.parse(sc.next());
+		usuario.setData_nasc_user(data);
+		
+		usuarioDao.update(usuario);
+		System.out.println("USUARIO ATUALIZADO COM SUCESSO!");
+	}
+	
+	public static void pesquisarPorCPF(Usuarios usuario, UsuariosDao usuarioDao, Double cpf) {
+		usuario = usuarioDao.findByCPF(cpf);
+		System.out.println(usuario);
+	}
+	
+	public static void deletarPorCPF(Usuarios usuario, UsuariosDao usuarioDao, Double cpf) {
+		usuario = new Usuarios();
+		usuarioDao.deleteByCPF(cpf);
+		System.out.println("DELETADO COM SUCESSO!");
+	}
 	
 }

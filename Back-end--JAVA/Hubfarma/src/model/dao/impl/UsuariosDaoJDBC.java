@@ -103,7 +103,7 @@ public class UsuariosDaoJDBC implements UsuariosDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("SELECT * FROM usuarios WHERE usuarios.cpf_user = ? ");
+			st = conn.prepareStatement("SELECT * FROM usuarios WHERE cpf_user = ? ");
 			st.setDouble(1, cpf);
 			rs = st.executeQuery();
 			if (rs.next()) {
@@ -135,26 +135,4 @@ public class UsuariosDaoJDBC implements UsuariosDao {
 		return usuario;
 	}
 
-	@Override
-	public List<Usuarios> findAll() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conn.prepareStatement("SELECT * FROM usuarios ORDER BY nome_user ");
-			rs = st.executeQuery();
-			
-			List<Usuarios> lista = new ArrayList<>();
-			return lista;
-		}
-		catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		}
-		finally {
-			DB.closeStatement(st);
-			DB.closeResultSet(rs);
-		}
-	}
-	
-
-	
 }

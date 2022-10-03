@@ -10,5 +10,5 @@ public interface VoluntarioDao {
 	void update(Voluntarios obj);
 	void deleteById(Integer id);
 	Voluntarios findById(Integer id);
-	List<Voluntarios> findAll();
+	
 }

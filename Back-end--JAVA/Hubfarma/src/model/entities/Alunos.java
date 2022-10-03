@@ -1,8 +1,13 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Scanner;
+
+import model.dao.AlunosDao;
 
 public class Alunos implements Serializable{
 
@@ -68,6 +73,52 @@ public class Alunos implements Serializable{
 	@Override
 	public String toString() {
 		return "Alunos \ncpf_alun = " + cpf_alun + "\nnome_alun = " + nome_alun + "\ndata_nasc_alun = " + data_nasc_alun;
+	}
+	
+	public static void cadastrarAluno(AlunosDao alunosDao) throws ParseException {
+		Scanner sc = new Scanner(System.in);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		
+		System.out.println("CADASTRAR NOVO ALUNO");
+		System.out.print("DIGITE O CPF: ");
+		double cpf = sc.nextDouble();
+		System.out.print("DIGITE O NOME: ");
+		String nome = sc.next();
+		System.out.println("DIGITE A DATA DE NASCIMENTO: ");
+		Date data = sdf.parse(sc.next("dd-MM-yyyy"));
+		
+		Alunos aluno = new Alunos(cpf, nome, data);
+		alunosDao.insert(aluno);
+		System.out.println("ALUNO ADICIONADO COM SUCESSO!");
+	}
+	
+	public static void atualizarAluno(Alunos aluno, AlunosDao alunoDao) throws ParseException {
+		Scanner sc = new Scanner(System.in);
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		
+		System.out.println("ATUALIZAR ALUNO");
+		System.out.print("DIGITE O CPF DO ALUNO: ");
+		Double cpf = sc.nextDouble();
+		System.out.print("DIGITE O NOME: ");
+		String nome = sc.next();
+		aluno.setNome_alun(nome);
+		System.out.println("DIGITE A DATA DE NASCIMENTO: ");
+		Date data = sdf.parse(sc.nextLine());
+		
+		
+		alunoDao.update(aluno);
+		System.out.println("ATUALIZAÇÃO CONCLUIDA!");
+	}
+	
+	public static void deletarPorCPF(Alunos aluno, AlunosDao alunoDao, Double cpf) {
+		aluno = new Alunos();
+		alunoDao.deleteByCPF(cpf);
+		System.out.println("DELETADO COM SUCESSO!");	
+	}
+	
+	public static void pesquisarPorCPF(Alunos aluno, AlunosDao alunoDao, Double cpf) {
+		aluno = alunoDao.findByCPF(cpf);
+		System.out.println(aluno);
 	}
 	
 	

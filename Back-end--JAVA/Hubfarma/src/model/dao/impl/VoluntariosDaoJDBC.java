@@ -27,14 +27,13 @@ public class VoluntariosDaoJDBC implements VoluntarioDao{
 		try{
 			st = conn.prepareStatement(
 										"INSERT INTO voluntarios "
-										+ "(id_voluntario, periodo, cpf_user_fk, cnpj_sind_fk) "
+										+ "(id_voluntario, periodo, cpf_user_fk) "
 										+ "VALUES "
-										+ "(?,?,?,?) ");
+										+ "(?,?,?) ");
 			
 			st.setInt(1, obj.getId_voluntario());
 			st.setString(2, obj.getPeriodo());
 			st.setDouble(3, obj.getUsuarios().getCpf_user());
-			st.setDouble(4, obj.getSindicato().getCnpj_sind());
 			
 			st.executeUpdate();
 			
@@ -119,26 +118,6 @@ public class VoluntariosDaoJDBC implements VoluntarioDao{
 		voluntarios.setId_voluntario(rs.getInt("id_voluntario"));
 		voluntarios.setPeriodo(rs.getString("periodo"));
 		return voluntarios;
-	}
-
-	@Override
-	public List<Voluntarios> findAll() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conn.prepareStatement("select * from voluntarios order by id_voluntario ");
-			rs = st.executeQuery();
-			
-			List<Voluntarios> lista = new ArrayList<>();
-			return lista;
-		}
-		catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		}
-		finally {
-			DB.closeStatement(st);
-			DB.closeResultSet(rs);
-		}
 	}
 
 }

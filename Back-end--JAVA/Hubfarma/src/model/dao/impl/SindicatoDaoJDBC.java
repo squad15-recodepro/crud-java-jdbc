@@ -132,26 +132,5 @@ public class SindicatoDaoJDBC implements SindicatoDao{
 		obj.setCidade_sind(rs.getString("cidade_sind"));
 		return obj;
 	}
-	
-	@Override
-	public List<Sindicato> findAll() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conn.prepareStatement("SELECT * FROM sindicatos ORDER BY nome_sind");
-			rs = st.executeQuery();
-			
-			List<Sindicato> lista = new ArrayList<>();
-			return lista;
-		}
-		catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		}
-		finally {
-			DB.closeStatement(st);
-			DB.closeResultSet(rs);
-		}
-	}
-
-	
+		
 }

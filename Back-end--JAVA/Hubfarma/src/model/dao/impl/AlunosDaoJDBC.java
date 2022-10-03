@@ -119,28 +119,4 @@ public class AlunosDaoJDBC implements AlunosDao{
 		return alun;
 	}
 	
-	@Override
-	public List<Alunos> findAll() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
-		try {
-			st = conn.prepareStatement(
-									"SELECT alunos.*,sindicatos.nome_sind as AlunosAll "
-									+ "FROM alunos INNER JOIN sindicatos "
-									+ "ON alunos.cnpj_sind_fk = sindicatos.cnpj_sind "
-									+ "ORDER BY nome_alun ");
-			rs = st.executeQuery();
-			
-			List<Alunos> lista = new ArrayList<>();
-			return lista;
-		}
-		catch (SQLException e) {
-			throw new DbException(e.getMessage());
-		}
-		finally {
-			DB.closeStatement(st);
-			DB.closeResultSet(rs);
-		}
-	}
-	
 }

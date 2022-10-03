@@ -10,5 +10,4 @@ public interface SindicatoDao {
 	void update(Sindicato obj);
 	void deleteByCNPJ(Double cnpj);
 	Sindicato findByCNPJ(Double cnpj);
-	List<Sindicato> findAll();
 }

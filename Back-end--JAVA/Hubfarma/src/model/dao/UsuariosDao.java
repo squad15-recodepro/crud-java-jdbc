@@ -10,5 +10,5 @@ public interface UsuariosDao {
 	void update(Usuarios obj);
 	void deleteByCPF(Double cpf);
 	Usuarios findByCPF(Double cpf);
-	List<Usuarios> findAll();
+	
 }
