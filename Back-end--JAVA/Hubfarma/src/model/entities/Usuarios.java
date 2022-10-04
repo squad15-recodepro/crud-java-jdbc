@@ -1,6 +1,7 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -144,11 +145,10 @@ public class Usuarios implements Serializable {
 		System.out.print("NOME: ");
 		String nome = sc.next();
 		System.out.println("ENDEREÇO: ");
-		sc.next();
+		sc.nextLine();
 		String end = sc.nextLine();
 		System.out.println("EMAIL: ");
 		String email = sc.next();
-		
 		System.out.println("UF: ");
 		String uf = sc.next();
 		System.out.println("CIDADE: ");
@@ -156,7 +156,7 @@ public class Usuarios implements Serializable {
 		System.out.println("FORMAÇÃO: ");
 		String formacao = sc.next();
 		System.out.println("DATA DE NASC: ");
-		Date data = sdf.parse(sc.next());
+		Date data = new Date();
 		
 		Usuarios user = new Usuarios(cpf, nome, end, email, uf, cidade, formacao, data);
 		usuarioDao.insert(user);
@@ -166,7 +166,7 @@ public class Usuarios implements Serializable {
 	
 	public static void atualizarUsuario(Usuarios usuario, UsuariosDao usuarioDao) throws ParseException {
 		Scanner sc = new Scanner(System.in);
-		SimpleDateFormat sdf = new SimpleDateFormat();
+		DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		System.out.println("ATUALIZAR USUARIO");
 		System.out.print("DIGITE O CPF DO USUARIO: ");
@@ -174,10 +174,10 @@ public class Usuarios implements Serializable {
 		usuario = usuarioDao.findByCPF(cpf);
 		System.out.println("DIGITE OS NOVOS DADOS DO USUARIO");
 		System.out.print("NOME: ");
-		sc.next();
 		String nome = sc.next();
 		usuario.setNome_user(nome);
 		System.out.println("ENDEREÇO: ");
+		sc.nextLine();
 		String end = sc.nextLine();
 		usuario.setEnd_user(end);
 		System.out.println("EMAIL: ");
@@ -187,12 +187,14 @@ public class Usuarios implements Serializable {
 		String uf = sc.next();
 		usuario.setUf_user(uf);
 		System.out.println("CIDADE: ");
-		String cidade = sc.next();
+		sc.nextLine();
+		String cidade = sc.nextLine();
 		usuario.setCidade_user(cidade);
 		System.out.println("FORMAÇÃO: ");
 		String formacao = sc.next();
+		usuario.setFormacao_user(formacao);
 		System.out.println("DATA DE NASC: ");
-		Date data = sdf.parse(sc.next());
+		Date data = new Date();
 		usuario.setData_nasc_user(data);
 		
 		usuarioDao.update(usuario);

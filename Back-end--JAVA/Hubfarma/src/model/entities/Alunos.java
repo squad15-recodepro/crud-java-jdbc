@@ -1,6 +1,7 @@
 package model.entities;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -77,7 +78,7 @@ public class Alunos implements Serializable{
 	
 	public static void cadastrarAluno(AlunosDao alunosDao) throws ParseException {
 		Scanner sc = new Scanner(System.in);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		System.out.println("CADASTRAR NOVO ALUNO");
 		System.out.print("DIGITE O CPF: ");
@@ -85,7 +86,7 @@ public class Alunos implements Serializable{
 		System.out.print("DIGITE O NOME: ");
 		String nome = sc.next();
 		System.out.println("DIGITE A DATA DE NASCIMENTO: ");
-		Date data = sdf.parse(sc.next("dd-MM-yyyy"));
+		Date data = new Date();
 		
 		Alunos aluno = new Alunos(cpf, nome, data);
 		alunosDao.insert(aluno);
@@ -103,7 +104,7 @@ public class Alunos implements Serializable{
 		String nome = sc.next();
 		aluno.setNome_alun(nome);
 		System.out.println("DIGITE A DATA DE NASCIMENTO: ");
-		Date data = sdf.parse(sc.nextLine());
+		Date data = new Date();
 		
 		
 		alunoDao.update(aluno);

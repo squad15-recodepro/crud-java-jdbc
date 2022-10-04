@@ -34,7 +34,7 @@ public class Program {
 		int a = 0;
 		while (a != 2 ) {
 			System.out.println("ESCOLHA A OPÇÃO DESEJADA");
-			System.out.println("1 - Sindicatos \n2 - Alunos \n3 - Usuarios \n4 - Voluntarios");
+			System.out.println("1 - Sindicatos \n2 - Alunos \n3 - Usuarios \n4 - Voluntarios \n5 - Sair");
 			int escolha = sc.nextInt();
 			switch (escolha) {
 			case 1:
@@ -42,7 +42,7 @@ public class Program {
 				while (test != 2) {
 					System.out.println("AREA DO SINDICATO SELECIONADA!");
 					System.out.println("ESCOLHA A OPÇÃO DESEJADA:");
-					System.out.println("1 - Cadastrar novo sindicato \n2 - Atualizar sindicato \n3 - Deletar sindicato \n4 - Pesquisar sindicato");
+					System.out.println("1 - Cadastrar novo sindicato \n2 - Atualizar sindicato \n3 - Deletar sindicato \n4 - Pesquisar sindicato \n5 - Sair");
 					int opc = sc.nextInt();
 					switch (opc) {
 					case 1:
@@ -64,6 +64,10 @@ public class Program {
 						double cnpj = sc.nextDouble();
 						sindicato.pesquisarSindicato(sindicato, sindicatoDao, cnpj);
 						break;
+						
+					case 5:
+						test = 2;
+						continue;
 					}
 					System.out.println("Deseja continuar?\n1 - SIM \n2 - NAO");
 					sc.nextLine();
@@ -78,7 +82,7 @@ public class Program {
 				while (test != 2) {
 					System.out.println("AREA DO ALUNO SELECIONADA!");
 					System.out.println("ESCOLHA A OPÇÃO DESEJADA:");
-					System.out.println("1 - Cadastrar novo aluno \n2 - Atualizar aluno \n3 - Deletar aluno \n4 - Pesquisar aluno");
+					System.out.println("1 - Cadastrar novo aluno \n2 - Atualizar aluno \n3 - Deletar aluno \n4 - Pesquisar aluno \n5 - Sair");
 					int opc = sc.nextInt();
 					switch (opc) {
 					case 1:
@@ -100,6 +104,10 @@ public class Program {
 						cpf = sc.nextDouble();
 						aluno.pesquisarPorCPF(aluno, alunosDao, cpf);
 						break;
+						
+					case 5:
+						test = 2;
+						continue;
 					}
 					System.out.println("Deseja continuar?\n1 - SIM \n2 - NAO");
 					sc.nextLine();
@@ -114,7 +122,7 @@ public class Program {
 				while (test != 2) {
 					System.out.println("AREA DO USUARIO SELECIONADA!");
 					System.out.println("ESCOLHA A OPÇÃO DESEJADA:");
-					System.out.println("1 - Cadastrar novo usuario \n2 - Atualizar usuario \n3 - Deletar usuario \n4 - Pesquisar usuario");
+					System.out.println("1 - Cadastrar novo usuario \n2 - Atualizar usuario \n3 - Deletar usuario \n4 - Pesquisar usuario \n5 - Sair");
 					int opc = sc.nextInt();
 					switch (opc) {
 					case 1:
@@ -136,6 +144,10 @@ public class Program {
 						cpf = sc.nextDouble();
 						usuario.pesquisarPorCPF(usuario, usuariosDao, cpf);
 						break;
+						
+					case 5:
+						test = 2;
+						continue;
 					}
 					System.out.println("Deseja continuar?\n1 - SIM \n2 - NAO");
 					sc.nextLine();
@@ -150,7 +162,7 @@ public class Program {
 				while (test != 2) {
 					System.out.println("AREA DO VOLUNTARIO SELECIONADA!");
 					System.out.println("ESCOLHA A OPÇÃO DESEJADA:");
-					System.out.println("1 - Cadastrar novo voluntario \n2 - Atualizar voluntario \n3 - Deletar voluntario \n4 - Pesquisar voluntario");
+					System.out.println("1 - Cadastrar novo voluntario \n2 - Atualizar voluntario \n3 - Deletar voluntario \n4 - Pesquisar voluntario \n5 - Sair");
 					int opc = sc.nextInt();
 					switch (opc) {
 					case 1:
@@ -172,6 +184,10 @@ public class Program {
 						id = sc.nextInt();
 						voluntario.pesquisarPorId(voluntario, voluntarioDao, id);
 						break;
+						
+					case 5:
+						test = 2;
+						continue;
 					}
 					System.out.println("Deseja continuar?\n1 - SIM \n2 - NAO");
 					sc.nextLine();
@@ -180,6 +196,8 @@ public class Program {
 						break;
 					}
 				}
+			case 5:
+				a = 2;
 				continue;
 			}
 		}
